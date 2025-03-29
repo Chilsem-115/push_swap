@@ -41,6 +41,7 @@ int	is_sorted(t_stack *stack)
 			return (0);
 		current = current->next;
 	}
+	return (1);
 }
 
 int	check_input_chars(int argc, char **argv)
@@ -91,19 +92,19 @@ int	main(int argc, char **argv)
 	}
 	a = malloc(sizeof(t_stack));
 	b = malloc(sizeof(t_stack));
-	a.top = NULL;
-	a.size = 0;
-	b.top = NULL;
-	b.size = 0;
-	if (check_input_chars(int argc, char **argv))
+	a->top = NULL;
+	a->size = 0;
+	b->top = NULL;
+	b->size = 0;
+	if (check_input_chars(argc, argv))
 	{
 		ft_dprintf(2, "Error: Invalid argument");
 		return (1);
 	}
-	if (parse_input(argc, argv, &a))
+	if (parse_input(argc, argv, a))
 		panic_exit(2, "Error: Failed Allocation", a, NULL);
 	if (is_sorted(a))
-		panic_exit(1, NULL, &a, &b);
+		panic_exit(1, NULL, a, b);
 	sort_list(a, b);
-	panic_exit(1, NULL, &a, &b);
+	panic_exit(1, NULL, a, b);
 }

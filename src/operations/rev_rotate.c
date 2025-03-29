@@ -1,39 +1,38 @@
-#include ""
+#include "../../inc/push_swap.h"
 
-void	rev_rotate(t_node **head)
+void	rra(t_stack **a) //Reverse rotate stack a: the last element becomes the top.
 {
-	t_node	*prev;
-	t_node	*last;
-
-	if (head == NULL || *head == NULL || (*head)->next == NULL)
-		return ;
-	prev = NULL;
-	last = *head;
-	while (last->next != NULL)
+	if ((*a)->size > 1)
 	{
-		prev = last;
-		last = last->next;
+		(*a)->top = (*a)->top->prev;
+		write(1, "rra\n", 4);
 	}
-	prev->next = NULL;
-	last->next = *head;
-	*head = last;
 }
 
-void	rra(t_node **a)
+void	rrb(t_stack **b) // Reverse rotate stack b: the last element becomes the top.
 {
-	rev_rotate(a);
-	ft_printf("rra");
+	if ((*b)->size > 1)
+	{
+		(*b)->top = (*b)->top->prev;
+		write(1, "rrb\n", 4);
+	}
 }
 
-void	rrb(t_node **b)
+void	rrr(t_stack **a, t_stack **b) // Reverse rotate both stacks.
 {
-	rev_rotate(b);
-	ft_printf("rrb");
-}
+	int rotated;
 
-void	rrr(t_node **a, t_node **b)
-{
-	rev_rotate(a);
-	rev_rotate(b);
-	ft_printf("rrr");
+	rotated = 0;
+	if ((*a)->size > 1)
+	{
+		(*a)->top = (*a)->top->prev;
+		rotated = 1;
+	}
+	if ((*b)->size > 1)
+	{
+		(*b)->top = (*b)->top->prev;
+		rotated = 1;
+	}
+	if (rotated)
+		write(1, "rrr\n", 4);
 }
