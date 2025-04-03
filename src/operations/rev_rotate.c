@@ -1,6 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   rev_rotate.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: itamsama <itamsama@student.1337.ma>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/03/29 09:24:59 by itamsama          #+#    #+#             */
+/*   Updated: 2025/03/29 09:28:23 by itamsama         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../inc/push_swap.h"
 
-void	rra(t_stack **a) //Reverse rotate stack a: the last element becomes the top.
+void	rra(t_stack **a)
 {
 	if ((*a)->size > 1)
 	{
@@ -9,7 +21,7 @@ void	rra(t_stack **a) //Reverse rotate stack a: the last element becomes the top
 	}
 }
 
-void	rrb(t_stack **b) // Reverse rotate stack b: the last element becomes the top.
+void	rrb(t_stack **b)
 {
 	if ((*b)->size > 1)
 	{
@@ -18,9 +30,9 @@ void	rrb(t_stack **b) // Reverse rotate stack b: the last element becomes the to
 	}
 }
 
-void	rrr(t_stack **a, t_stack **b) // Reverse rotate both stacks.
+void	rrr(t_stack **a, t_stack **b)
 {
-	int rotated;
+	int	rotated;
 
 	rotated = 0;
 	if ((*a)->size > 1)

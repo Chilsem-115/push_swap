@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   sort_list.c                                        :+:      :+:    :+:   */
+/*   sort_list_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: itamsama <itamsama@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/23 12:00:00 by itamsama          #+#    #+#             */
-/*   Updated: 2025/03/23 12:00:00 by itamsama         ###   ########.fr       */
+/*   Updated: 2025/03/29 10:30:56 by itamsama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,8 @@ void	slide(int *start, int *end, int len)
 	(*start)++;
 	(*end)++;
 	if (*end >= len)
-		*end = len - 1; // preventing overflow
+		*end = len - 1;
 }
-
 
 void	rotate_to_max(t_stack **b, int max_val, int max_index, int middle)
 {
@@ -69,23 +68,23 @@ int	get_max(t_stack *b)
 	return (max);
 }
 
-int	list_length(t_stack *b)
+int	find_max_index(t_stack *b, int max_val)
 {
 	t_node	*current;
-	t_node	*first;
-	int		count;
+	int		index;
 
 	if (!b || !b->top)
-		return (0);
-	count = 0;
+		return (-1);
 	current = b->top;
-	first = b->top;
+	index = 0;
 	while (1)
 	{
-		count++;
+		if (current->num == max_val)
+			return (index);
+		index++;
 		current = current->next;
-		if (current == first)
+		if (current == b->top)
 			break ;
 	}
-	return (count);
+	return (-1);
 }

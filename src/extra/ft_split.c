@@ -1,17 +1,29 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_split.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: itamsama <itamsama@student.1337.fr>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/03/29 09:31:29 by itamsama          #+#    #+#             */
+/*   Updated: 2025/03/29 09:33:13 by itamsama         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../inc/push_swap.h"
 
-static void    *ft_memcpy(void *dst, const void *src, size_t n)
+static void	*ft_memcpy(void *dst, const void *src, size_t n)
 {
-        unsigned char           *d;
-        const unsigned char     *s;
+	unsigned char		*d;
+	const unsigned char	*s;
 
-        if ((dst == src) || n == 0)
-                return (dst);
-        s = (const unsigned char *)src;
-        d = (unsigned char *)dst;
-        while (n--)
-                *d++ = *s++;
-        return (dst);
+	if ((dst == src) || n == 0)
+		return (dst);
+	s = (const unsigned char *)src;
+	d = (unsigned char *)dst;
+	while (n--)
+		*d++ = *s++;
+	return (dst);
 }
 
 static unsigned int	count_words(const char *s, char c)

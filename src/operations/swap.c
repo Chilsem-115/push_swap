@@ -1,3 +1,14 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   swap.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: itamsama <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/03/29 09:26:37 by itamsama          #+#    #+#             */
+/*   Updated: 2025/03/29 09:27:07 by itamsama         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "../../inc/push_swap.h"
 
@@ -20,23 +31,23 @@ static void	swap(t_stack **stack)
 	second->index = temp_index;
 }
 
-void	sa(t_stack **a) // swaps the first 2 elements of stack a
+void	sa(t_stack **a)
 {
 	if (!a || !(*a) || (*a)->size < 2)
 		return ;
 	swap(a);
-	ft_putstr_fd("sa\n", 1);
+	write(1, "sa\n", 3);
 }
 
-void	sb(t_stack **b) // swaps the first 2 elements of stack b
+void	sb(t_stack **b)
 {
 	if (!b || !(*b) || (*b)->size < 2)
 		return ;
 	swap(b);
-	ft_putstr_fd("sb\n", 1);
+	write(1, "sb\n", 3);
 }
 
-void	ss(t_stack **a, t_stack **b) // do both sa and sb
+void	ss(t_stack **a, t_stack **b)
 {
 	int	swapped;
 
@@ -52,5 +63,5 @@ void	ss(t_stack **a, t_stack **b) // do both sa and sb
 		swapped = 1;
 	}
 	if (swapped)
-		ft_putstr_fd("ss\n", 1);
+		write(1, "ss\n", 3);
 }

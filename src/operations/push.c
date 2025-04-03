@@ -1,6 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   push.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: itamsama <itamsama@student.1337.ma>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/03/29 09:23:51 by itamsama          #+#    #+#             */
+/*   Updated: 2025/03/29 09:29:02 by itamsama         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../inc/push_swap.h"
 
-static void	push(t_stack **dest, t_stack **src) // pushes a node from src to dest
+static void	push(t_stack **dest, t_stack **src)
 {
 	t_node	*node;
 	t_node	*last;
@@ -35,7 +47,7 @@ static void	push(t_stack **dest, t_stack **src) // pushes a node from src to des
 	(*dest)->size++;
 }
 
-void	pa(t_stack **a, t_stack **b) // push the top element of stack b to stack a.
+void	pa(t_stack **a, t_stack **b)
 {
 	if ((*b)->size > 0)
 	{
@@ -44,8 +56,7 @@ void	pa(t_stack **a, t_stack **b) // push the top element of stack b to stack a.
 	}
 }
 
-
-void	pb(t_stack **a, t_stack **b) // push the top element of stack a to stack b.
+void	pb(t_stack **a, t_stack **b)
 {
 	if ((*a)->size > 0)
 	{

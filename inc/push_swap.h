@@ -17,9 +17,7 @@
 # include <stdlib.h> 
 # include <unistd.h> 
 # include <stdio.h>
-
-# define INT_MAX 2147483647
-# define INT_MIN (-2147483648)
+# include <limits.h>
 
 typedef struct s_node
 {
@@ -46,25 +44,23 @@ char	*ft_strjoin(char const *s1, char const *s2);
 char	**ft_split(const char *s, char c);
 
 // program initialization and parsing
-int		parse_input(int argc, char **argv, t_stack *a);
-void	fill_stack(char **tokens, t_stack *stack);
-t_node	*create_node(int num, int index);
-char	**join_args(int argc, char **argv);
+int		parse_input(int argc, char **argv, t_stack **a);
+void	fill_stack(char **tokens, t_stack **stack);
+char	**join_args(int argc, char **argv, t_stack **stack);
 
 // safety and program exit
 void	panic_exit(int fd, const char *msg, t_stack *a, t_stack *b); 
-int		check_input_chars(int argc, char **argv);
 int		check_duplicates(t_stack *stack);
-int		is_valid_token(const char *str);
 int		is_valid_int(const char *str);
+int		is_valid_token(char *str);
+int		validate_all_tokens(char **tokens);
+void	free_tokens(char **tokens);
 
 // safety and memory cleanup
 int		is_sorted(t_stack *stack);
 void	free_stack(t_stack *stack);
-
 //---------------//Operations//-----------------//
 // push
-void	push(t_stack **dest, t_stack **src);
 void	pa(t_stack **a, t_stack **b);
 void	pb(t_stack **a, t_stack **b);
 
@@ -74,17 +70,17 @@ void	rb(t_stack **b);
 void	rr(t_stack **a, t_stack **b);
 
 //rev_roate
-void	rra(t_stack *a);
-void	rrb(t_stack *b);
-void	rrr(t_stack *a, t_stack *b);
+void	rra(t_stack **a);
+void	rrb(t_stack **b);
+void	rrr(t_stack **a, t_stack **b);
 
 //swap
-void	swap(t_stack **stack);
 void	sa(t_stack **a);
 void	sb(t_stack **b);
 void	ss(t_stack **a, t_stack **b);
 
 //---------------//Sorting//-----------------//
+int		*create_sorted_array(t_stack *stack);
 void	pre_sort(t_stack **a, t_stack **b, int len, int *arr);
 void	sort_back(t_stack **a, t_stack **b);
 void	sort_list(t_stack **a, t_stack **b);

@@ -6,13 +6,31 @@
 /*   By: itamsama <itamsama@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 03:44:09 by itamsama          #+#    #+#             */
-/*   Updated: 2025/03/23 00:58:15 by itamsama         ###   ########.fr       */
+/*   Updated: 2025/03/29 10:44:46 by itamsama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/push_swap.h"
 
-t_node	*create_node(int num, int index)
+void free_stack(t_stack **stack)
+{
+	t_node *current;
+	t_node *tmp;
+
+	if (!stack || !*stack)
+		return;
+	current = (*stack)->top;
+	while (current && (*stack)->size--)
+	{
+		tmp = current->next;
+		free(current);
+		current = tmp;
+	}
+	free(*stack);
+	*stack = NULL;
+}
+
+static t_node	*create_node(int num, int index)
 {
 	t_node	*node;
 
@@ -21,85 +39,59 @@ t_node	*create_node(int num, int index)
 		return (NULL);
 	node->num = num;
 	node->index = index;
-	node->next = NULL;
-	node->prev = NULL;
+	node->next = node;
+	node->prev = node;
 	return (node);
 }
 
-void	fill_stack(char **tokens, t_stack *stack)
+void	fill_stack(char **tokens, t_stack **stack)
 {
-	int		i;
-	int		num;
-	t_node	*new_node;
+	t_node	*new;
 	t_node	*last;
+	int		i;
 
-	i = 0;
-	while (tokens[i])
+	i = -1;
+	while (tokens[++i])
 	{
-		num = ft_atoi(tokens[i]);
-		new_node = create_node(num, 0);
-		if (!new_node)
-			panic_exit(2, "Error: Failed Allocation", stack, NULL);
-		if (!stack->top)
-			stack->top = new_node;
+		new = create_node(ft_atoi(tokens[i]), 0);
+		if (!new)
+			panic_exit(2, "Error", *stack, NULL);
+		if (!(*stack)->top)
+			(*stack)->top = new;
 		else
 		{
-			last = stack->top;
-			while (last->next)
-				last = last->next;
-			last->next = new_node;
-			new_node->prev = last;
+			last = (*stack)->top->prev;
+			last->next = new;
+			new->prev = last;
+			new->next = (*stack)->top;
+			(*stack)->top->prev = new;
 		}
-		stack->size++;
-		i++;
+		(*stack)->size++;
 	}
 }
 
-int	check_duplicate(t_node *head)
-{
-	t_node	*current;
-	t_node	*runner;
-
-	current = head;
-	while (current != NULL)
-	{
-		runner = current->next;
-		while (runner != NULL)
-		{
-			if (current->num == runner->num)
-				return (1);
-			runner = runner->next;
-		}
-		current = current->next;
-	}
-	return (0);
-}
-
-int	parse_input(int argc, char **argv, t_stack *stack)
+int	parse_input(int argc, char **argv, t_stack **stack)
 {
 	char	**tokens;
-	int		i;
 
 	tokens = NULL;
-	i = 0;
 	if (argc == 2)
 		tokens = ft_split(argv[1], ' ');
 	else if (argc > 2)
+		tokens = join_args(argc, argv + 1, stack);
+	if (!tokens || !*tokens)
+		panic_exit(2, "Error", *stack, NULL);
+	if (validate_all_tokens(tokens))
 	{
-		if (argv[1])
-			tokens = join_args(argc, argv);
-		else
-			panic_exit(2, "Error: Invalid Argument", stack, NULL);
+		free_tokens(tokens);
+		panic_exit(2, "Error", *stack, NULL);
 	}
-	if (tokens)
 	fill_stack(tokens, stack);
-	if (check_duplicate(stack->top))
-		panic_exit(2, "Error: Invalid Argument", stack, NULL);
-	while (tokens[i])
+	if (check_duplicates(*stack))
 	{
-		free(tokens[i]);
-		i++;
+		free_tokens(tokens);
+		panic_exit(2, "Error", *stack, NULL);
 	}
-	free(tokens);
+	free_tokens(tokens);
 	return (0);
 }

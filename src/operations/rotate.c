@@ -1,7 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   rotate.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: itamsama <itamsama@studnet.1337.ma>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/03/29 09:25:52 by itamsama          #+#    #+#             */
+/*   Updated: 2025/03/29 09:30:46 by itamsama         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "../../inc/push_swap.h"
 
-void	ra(t_stack **a) // Rotate stack b: the first element becomes the last.
+void	ra(t_stack **a)
 {
 	if ((*a)->size > 1)
 	{
@@ -10,7 +21,7 @@ void	ra(t_stack **a) // Rotate stack b: the first element becomes the last.
 	}
 }
 
-void	rb(t_stack **b) // Rotate stack b: the first element becomes the last.
+void	rb(t_stack **b)
 {
 	if ((*b)->size > 1)
 	{
@@ -19,9 +30,9 @@ void	rb(t_stack **b) // Rotate stack b: the first element becomes the last.
 	}
 }
 
-void	rr(t_stack **a, t_stack **b) // Does ra and rb at the same time
+void	rr(t_stack **a, t_stack **b)
 {
-	int rotated;
+	int	rotated;
 
 	rotated = 0;
 	if ((*a)->size > 1)
