@@ -82,7 +82,7 @@ char	**join_args(int argc, char **argv, t_stack **stack)
 	return (result);
 }
 
-int	check_duplicate(t_stack *stack)
+int	check_duplicates(t_stack *stack)
 {
 	t_node	*current;
 	t_node	*runner;

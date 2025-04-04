@@ -34,7 +34,7 @@ int	check_input_chars(int argc, char **argv)
 	int		j;
 	char	*s;
 
-	i = 0;
+	i = 1;
 	while (i < argc)
 	{
 		j = 0;
@@ -63,12 +63,12 @@ void	panic_exit(int fd, const char *msg, t_stack *a, t_stack *b)
 		ft_dprintf(fd, "%s\n", msg);
 	if (a)
 	{
-		free_stack(a);
+		free_stack(&a);
 		free(a);
 	}
 	if (b)
 	{
-		free_stack(b);
+		free_stack(&b);
 		free(b);
 	}
 	if (fd == 1)

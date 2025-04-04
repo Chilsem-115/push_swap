@@ -58,7 +58,7 @@ void	free_tokens(char **tokens);
 
 // safety and memory cleanup
 int		is_sorted(t_stack *stack);
-void	free_stack(t_stack *stack);
+void	free_stack(t_stack **stack);
 //---------------//Operations//-----------------//
 // push
 void	pa(t_stack **a, t_stack **b);

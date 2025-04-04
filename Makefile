@@ -19,7 +19,7 @@ OBJ = $(OBJS) $(FT_PRINTF_OBJS)
 all: $(NAME)
 
 $(NAME): $(OBJ)
-	$(CC) $(CFLAGS) -o $(NAME) $(OBJ)
+	$(CC) $(CFLAGS) -o $(NAME) $(OBJ) lib/ft_printf/ft_printf.a
 
 # Compile source files from src/ (and subdirectories)
 obj/%.o: src/%.c
