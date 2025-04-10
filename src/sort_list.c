@@ -12,7 +12,7 @@
 
 #include "../inc/push_swap.h"
 
-void	pre_sort(t_stack **a, t_stack **b, int len, int *arr)
+static void	pre_sort(t_stack **a, t_stack **b, int len, int *arr)
 {
 	int	start;
 	int	end;
@@ -37,7 +37,7 @@ void	pre_sort(t_stack **a, t_stack **b, int len, int *arr)
 	}
 }
 
-void	sort_back(t_stack **a, t_stack **b)
+static void	sort_back(t_stack **a, t_stack **b)
 {
 	int	max_val;
 	int	middle;
@@ -55,13 +55,12 @@ void	sort_back(t_stack **a, t_stack **b)
 	}
 }
 
-void	sort_list(t_stack **a, t_stack **b)
+void	sort_list(t_state *state)
 {
-	int	*arr;
+	int	i;
 
-	arr = create_sorted_array(*a);
-	if (!arr)
-		return ;
+	i = 0;
+	sort_tokens(state);
 	pre_sort(a, b, (*a)->size, arr);
 	sort_back(a, b);
 	free(arr);

@@ -33,32 +33,27 @@ typedef struct s_stack
 	int		size;
 }		t_stack;
 
-// external functions
-size_t	ft_strlen(const char *str);
-double	ft_atoi(const char *str);
-int		ft_isdigit(const int x);
-size_t	ft_strlcpy(char *dst, const char *src, size_t size);
-size_t  ft_strlcat(char *dst, const char *src, size_t size);
-char	*ft_strdup(const char *src);
-char	*ft_strjoin(char const *s1, char const *s2);
-char	**ft_split(const char *s, char c);
+typedef struct s_state
+{
+	t_stack	*a;
+	t_stack	*b;
+	int		*tokens;
+	int		token_count;
+}		t_state;
 
 // program initialization and parsing
-int		parse_input(int argc, char **argv, t_stack **a);
-void	fill_stack(char **tokens, t_stack **stack);
-char	**join_args(int argc, char **argv, t_stack **stack);
+void	initial_check(t_state *state, int argc, char **argv);
+int		*parse_input(int argc, char **argv);
+void	fill_stack(t_state *state);
 
 // safety and program exit
-void	panic_exit(int fd, const char *msg, t_stack *a, t_stack *b); 
-int		check_duplicates(t_stack *stack);
-int		is_valid_int(const char *str);
-int		is_valid_token(char *str);
-int		validate_all_tokens(char **tokens);
-void	free_tokens(char **tokens);
-
-// safety and memory cleanup
-int		is_sorted(t_stack *stack);
+void	panic_exit(int fd, const char *msg, t_state *state); 
+int		check_dup(int *tokens);
+int		validate_tokens(char **tokens);
+int		is_sorted(int *tokens);
 void	free_stack(t_stack **stack);
+void	free_strarr(char **tokens);
+
 //---------------//Operations//-----------------//
 // push
 void	pa(t_stack **a, t_stack **b);
@@ -81,9 +76,8 @@ void	ss(t_stack **a, t_stack **b);
 
 //---------------//Sorting//-----------------//
 int		*create_sorted_array(t_stack *stack);
-void	pre_sort(t_stack **a, t_stack **b, int len, int *arr);
-void	sort_back(t_stack **a, t_stack **b);
-void	sort_list(t_stack **a, t_stack **b);
+void	sort_tokens(t_state *state, int size);
+void	sort_list(t_state *state);
 
 //---------------//Sorting Utils//-----------------//
 int		find_max_index(t_stack *b, int max_val);
@@ -92,5 +86,19 @@ void	slide(int *start, int *end, int len);
 void	rotate_to_max(t_stack **b, int max_val, int max_index, int middle);
 int		get_max(t_stack *b);
 int		list_length(t_stack *b);
+
+// extra functions
+
+void	free_dp(char **buffer);
+int		ft_issign(int c);
+char	*ft_strdup(const char *src);
+size_t	ft_strlcpy(char *dst, const char *src, size_t size);
+double	ft_atoi(const char *str);
+int	ft_isspace(int c);
+char	*ft_strjoin(char const *s1, char const *s2);
+size_t	ft_strlen(const char *str);
+int	ft_isdigit(const int x);
+char	**ft_split(const char *s, char c);
+size_t	ft_strlcat(char *dst, const char *src, size_t size);
 
 #endif

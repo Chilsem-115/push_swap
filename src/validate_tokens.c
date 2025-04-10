@@ -12,7 +12,7 @@
 
 #include "../inc/push_swap.h"
 
-int	is_valid_int(const char *str)
+static int	is_valid_int(const char *str)
 {
 	long	num;
 	size_t	len;
@@ -26,7 +26,7 @@ int	is_valid_int(const char *str)
 	return (0);
 }
 
-int	is_valid_token(char *str)
+static int	is_valid_token(char *str)
 {
 	int	i;
 
@@ -38,31 +38,47 @@ int	is_valid_token(char *str)
 	if (!str[i] || !ft_isdigit(str[i]))
 		return (1);
 	while (str[++i])
+	{
 		if (!ft_isdigit(str[i]))
 			return (1);
+	}
 	return (is_valid_int(str));
 }
 
-int	validate_all_tokens(char **tokens)
+int	validate_tokens(char **tokens)
 {
 	int	i;
-	int	j;
-	int	nums[1000];
 
-	if (!tokens || !*tokens)
+	if (!tokens)
 		return (1);
-	i = -1;
-	while (tokens[++i] && i < 999)
+	i = 0;
+	while (tokens[i])
 	{
 		if (is_valid_token(tokens[i]))
 			return (1);
-		nums[i] = ft_atoi(tokens[i]);
-		j = -1;
-		while (++j < i)
-			if (nums[j] == nums[i])
-				return (1);
+		i++;
 	}
-	if (tokens[i])
-		return (1);
 	return (0);
+}
+
+void	check_dup(t_state state)
+{
+	int	i;
+	int	j;
+
+	if (!state->tokens)
+		panic_exit(2, "Error: Invalid tokens", state);
+	i = 0;
+	while (i < state->token_count)
+	{
+		j = i + 1;
+		while (j < state->token_count)
+		{
+			if (state->tokens[i] == state->tokens[j])
+				panic_exit(2, "Error: Invalid tokens", state);
+			j++;
+		}
+		i++;
+	}
+	return ;
 }

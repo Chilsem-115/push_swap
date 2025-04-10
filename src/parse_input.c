@@ -1,97 +1,78 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   parse_input.c                                      :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: itamsama <itamsama@student.1337.ma>        +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/18 03:44:09 by itamsama          #+#    #+#             */
-/*   Updated: 2025/03/29 10:44:46 by itamsama         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "../inc/push_swap.h"
 
-void free_stack(t_stack **stack)
+static char	*join_args(int argc, char **argv)
 {
-	t_node *current;
-	t_node *tmp;
-
-	if (!stack || !*stack)
-		return;
-	current = (*stack)->top;
-	while (current && (*stack)->size--)
-	{
-		tmp = current->next;
-		free(current);
-		current = tmp;
-	}
-	free(*stack);
-	*stack = NULL;
-}
-
-static t_node	*create_node(int num, int index)
-{
-	t_node	*node;
-
-	node = malloc(sizeof(t_node));
-	if (!node)
-		return (NULL);
-	node->num = num;
-	node->index = index;
-	node->next = node;
-	node->prev = node;
-	return (node);
-}
-
-void	fill_stack(char **tokens, t_stack **stack)
-{
-	t_node	*new;
-	t_node	*last;
+	char	*joined;
+	char	*temp;
 	int		i;
-
-	i = -1;
-	while (tokens[++i])
+	
+	joined = ft_strdup(argv[1]);
+	if (!joined)
+		return (NULL);
+	i = 2;
+	while (i < argc)
 	{
-		new = create_node(ft_atoi(tokens[i]), 0);
-		if (!new)
-			panic_exit(2, "Error", *stack, NULL);
-		if (!(*stack)->top)
-			(*stack)->top = new;
-		else
-		{
-			last = (*stack)->top->prev;
-			last->next = new;
-			new->prev = last;
-			new->next = (*stack)->top;
-			(*stack)->top->prev = new;
-		}
-		(*stack)->size++;
+		temp = ft_strjoin(joined, " ");
+		free(joined);
+		if (!temp)
+			return (NULL);
+		joined = ft_strjoin(temp, argv[i]);
+		free(temp);
+		if (!joined)
+			return (NULL);
+		i++;
 	}
+	return (joined);
 }
 
-int	parse_input(int argc, char **argv, t_stack **stack)
+static int	*setup_tokens(char **tokens, int count)
+{
+	int	*result;
+	int	i;
+
+	if (tokens == NULL)
+		return (NULL);
+	result = malloc(count * sizeof(int));
+	if (result == NULL)
+		return (NULL);
+	i = 0;
+	while (i < count)
+	{
+		result[i] = ft_atoi(tokens[i]);
+		i++;
+	}
+	return (result);
+}
+
+static int count_elements(char **tokens)
+{
+	int	count;
+
+	count = 0;
+	if (!tokens)
+		return (0);
+	while (tokens[count])
+		count++;
+	return (count);
+}
+
+void	parse_input(t_state *state, int argc, char **argv)
 {
 	char	**tokens;
+	char	*joined_args;
 
-	tokens = NULL;
-	if (argc == 2)
-		tokens = ft_split(argv[1], ' ');
-	else if (argc > 2)
-		tokens = join_args(argc, argv + 1, stack);
+	joined_args = join_args(argc, argv); 
+	if (!joined_args)
+		panic_exit(2, "Error: Failed Allocation", state);
+	tokens = ft_split(joined_args, ' ');
+	free(joined_args);
+	state->token_count = count_elements(tokens);
 	if (!tokens || !*tokens)
-		panic_exit(2, "Error", *stack, NULL);
-	if (validate_all_tokens(tokens))
-	{
-		free_tokens(tokens);
-		panic_exit(2, "Error", *stack, NULL);
-	}
-	fill_stack(tokens, stack);
-	if (check_duplicates(*stack))
-	{
-		free_tokens(tokens);
-		panic_exit(2, "Error", *stack, NULL);
-	}
-	free_tokens(tokens);
-	return (0);
+		panic_exit(2, "Error: Failed Allocation", state);
+	if (validate_tokens(tokens))
+		panic_exit(2, "Error: Invalid tokens", state);
+	state->tokens = setup_tokens(tokens, state->token_count);
+	if (!state->tokens)
+		panic_exit(2, "Error: Invalid tokens", state);
+	free_dp(tokens);
 }

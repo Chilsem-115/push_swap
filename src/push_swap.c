@@ -12,92 +12,44 @@
 
 #include "../inc/push_swap.h"
 
-int	is_sorted(t_stack *stack)
+static void print_tokens(t_state *state)
 {
-	t_node	*current;
+	int	i;
 
-	if (!stack || !stack->top || stack->size == 1)
-		return (1);
-	current = stack->top;
-	while (current->next != stack->top)
+	i = 0;
+	while (i < state->token_count)
 	{
-		if (current->num > current->next->num)
-			return (0);
-		current = current->next;
-	}
-	return (1);
-}
-
-int	check_input_chars(int argc, char **argv)
-{
-	int		i;
-	int		j;
-	char	*s;
-
-	i = 1;
-	while (i < argc)
-	{
-		j = 0;
-		s = argv[i];
-		while (s[j])
-		{
-			if (s[j] == '+' || s[j] == '-')
-			{
-				if (j != 0 && s[j - 1] != ' ')
-					return (1);
-				if (!ft_isdigit(s[j + 1]))
-					return (1);
-			}
-			else if (!ft_isdigit(s[j]) && s[j] != ' ')
-				return (1);
-			j++;
-		}
+		ft_printf("%d\n", state.tokens[i]);
 		i++;
 	}
-	return (0);
 }
 
-void	panic_exit(int fd, const char *msg, t_stack *a, t_stack *b)
+static void	initialize_stacks(t_state *state)
 {
-	if (msg)
-		ft_dprintf(fd, "%s\n", msg);
-	if (a)
-	{
-		free_stack(&a);
-		free(a);
-	}
-	if (b)
-	{
-		free_stack(&b);
-		free(b);
-	}
-	if (fd == 1)
-		exit(EXIT_SUCCESS);
-	else if (fd == 2)
-		exit(EXIT_FAILURE);
+	state = malloc(sizeof(t_state));
+	state->a = malloc(sizeof(t_stack));
+	state->b = malloc(sizeof(t_stack));
+	if (!a || !b)
+		panic_exit(2, "Error: Allocation failed", state);
+	state->a->top = NULL;
+	state->a->size = 0;
+	state->b->top = NULL;
+	state->b->size = 0;
 }
 
 int	main(int argc, char **argv)
 {
-	t_stack	*a;
-	t_stack	*b;
+	t_state		*state;
 
+	initialize_program(state);
 	if (argc < 2)
-		panic_exit(2, "Error: Not Enough Arguments", NULL, NULL);
-	a = malloc(sizeof(t_stack));
-	b = malloc(sizeof(t_stack));
-	if (!a || !b)
-		panic_exit(2, "Error: Allocation failed", a, b);
-	a->top = NULL;
-	a->size = 0;
-	b->top = NULL;
-	b->size = 0;
-	if (check_input_chars(argc, argv))
-		panic_exit(2, "Error: Invalid characters", a, b);
-	if (parse_input(argc, argv, &a))
-		panic_exit(2, "Error: Failed Allocation", a, NULL);
-	if (is_sorted(a))
-		panic_exit(1, NULL, a, b);
-	sort_list(&a, &b);
-	panic_exit(1, NULL, a, b);
+		panic_exit(2, "Error: Not Enough Arguments", state);
+	initial_check(state ,argc, argv);
+	parse_input(state, argc, argv); // to make an array of integers
+	print_tokens(state); 			// to make sure its correct
+	check_dup(state); 				// to exit when a duplicate is found
+	is_sorted(state) 				// to exit if the input is already sorted
+	fill_stack(state); 				// to fill in the arguments into stack a
+	sort_list(state, state.tokens); // sorting the list
+	panic_exit(1, NULL, state); 	// to free state before exiting the program
 }
