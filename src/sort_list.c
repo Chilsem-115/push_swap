@@ -61,7 +61,7 @@ void	sort_list(t_state *state)
 
 	i = 0;
 	sort_tokens(state);
-	pre_sort(a, b, (*a)->size, arr);
+	pre_sort(&state->a, &state->b, state->token_count, state->tokens);
 	sort_back(a, b);
 	free(arr);
 }

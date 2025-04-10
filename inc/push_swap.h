@@ -41,18 +41,25 @@ typedef struct s_state
 	int		token_count;
 }		t_state;
 
-// program initialization and parsing
+// check initial argument
+void	check_empty(int argc, char **argv, t_state *state);
+void	check_end_of_arg(char *arg, int j, int req_dig, t_state *state);
+void	check_space_placement(char *arg, int j, t_state *state);
+void	check_sign_placement(char *arg, int j, t_state *state);
+int		is_valid_char(int c);
 void	initial_check(t_state *state, int argc, char **argv);
-int		*parse_input(int argc, char **argv);
+
+// parsing
+void	parse_input(t_state *state, int argc, char **argv);
+int		validate_tokens(char **tokens);
 void	fill_stack(t_state *state);
+
+// verify argumengts
+int		check_dup(t_state *state);
+void	is_sorted(t_state *state);
 
 // safety and program exit
 void	panic_exit(int fd, const char *msg, t_state *state); 
-int		check_dup(int *tokens);
-int		validate_tokens(char **tokens);
-int		is_sorted(int *tokens);
-void	free_stack(t_stack **stack);
-void	free_strarr(char **tokens);
 
 //---------------//Operations//-----------------//
 // push
@@ -94,10 +101,10 @@ int		ft_issign(int c);
 char	*ft_strdup(const char *src);
 size_t	ft_strlcpy(char *dst, const char *src, size_t size);
 double	ft_atoi(const char *str);
-int	ft_isspace(int c);
+int		ft_isspace(int c);
 char	*ft_strjoin(char const *s1, char const *s2);
 size_t	ft_strlen(const char *str);
-int	ft_isdigit(const int x);
+int		ft_isdigit(const int x);
 char	**ft_split(const char *s, char c);
 size_t	ft_strlcat(char *dst, const char *src, size_t size);
 

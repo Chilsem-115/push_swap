@@ -1,5 +1,5 @@
 
-#include "../inc/push.swap.h"
+#include "../inc/push_swap.h"
 
 int	is_valid_char(int c)
 {

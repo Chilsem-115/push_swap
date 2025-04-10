@@ -1,41 +1,40 @@
 
 #include "../inc/push_swap.h"
 
-static void	check_sign(char *arg, int j, t_state *state)
+static void	check_argument(char *arg, t_state *state)
 {
-	if (j > 0 && !ft_isspace(arg[j - 1]))
-		panic_exit(2, "Error", state);
-	if (!ft_isdigit(arg[j + 1]))
-		panic_exit(2, "Error", state);
-}
-
-void		initial_check(t_state *state, int argc, char **argv)
-{
-	int	i;
 	int	j;
 	int	num_flag;
 
-	check_empty(argc, argv, state);
+	j = 0;
+	while (arg[j])
+	{
+		if (num_flag && !ft_isdigit(arg[j]) && !ft_isspace(arg[j]))
+			panic_exit(2, "Error", state);
+		if (ft_issign(arg[j]))
+		{
+			if ((j > 0 && !ft_isspace(arg[j - 1]))
+				|| !ft_isdigit(arg[j + 1]))
+				panic_exit(2, "Error", state);
+			num_flag = 1;
+		}
+		else if (ft_isdigit(arg[j]))
+			num_flag = 0;
+		else if (!ft_isspace(arg[j]))
+			panic_exit(2, "Error", state);
+		j++;
+	}
+}
+
+void	initial_check(t_state *state, int argc, char **argv)
+{
+	int	i;
+
 	i = 1;
+	check_empty(argc, argv, state);
 	while (i < argc)
 	{
-		j = 0;
-		num_flag = 0;
-		while (argv[i][j])
-		{
-			if (num_flag && !ft_isdigit(argv[i][j]) && !ft_isspace(argv[i][j]))
-				panic_exit(2, "Error", state);
-			if (ft_issign(argv[i][j]))
-			{
-				check_sign(argv[i], j, state);
-				num_flag = 1;
-			}
-			else if (ft_isdigit(argv[i][j]))
-				num_flag  = 0;
-			else if (!ft_isspace(argv[i][j]))
-				panic_exit(2, "Error", state);
-			j++;
-		}
+		check_argument(argv[i], state);
 		i++;
 	}
 }
