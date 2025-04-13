@@ -1,15 +1,15 @@
 #include "../inc/push_swap.h"
 
-static void	free_stack(t_stack **stack)
+static void	free_stack(t_stack *stack)
 {
 	t_node	*current;
 	t_node	*tmp;
 	int		count;
 
-	if (!stack || !*stack)
+	if (!stack)
 		return;
-	current = (*stack)->top;
-	count = (*stack)->size;
+	current = stack->top;
+	count = stack->size;
 	while (current && count > 0)
 	{
 		tmp = current->next;
@@ -17,8 +17,7 @@ static void	free_stack(t_stack **stack)
 		current = tmp;
 		count--;
 	}
-	free(*stack);
-	*stack = NULL;
+	free(stack);
 }
 
 void	panic_exit(int fd, const char *msg, t_state *state) 

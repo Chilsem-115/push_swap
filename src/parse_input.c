@@ -56,6 +56,13 @@ static int count_elements(char **tokens)
 	return (count);
 }
 
+static void error_handler(int fd, char *str, t_state *state, char **tokens)
+{
+	if (tokens)
+		free_dp(tokens);
+	panic_exit(fd, str, state);
+}
+
 void	parse_input(t_state *state, int argc, char **argv)
 {
 	char	**tokens;
@@ -63,16 +70,16 @@ void	parse_input(t_state *state, int argc, char **argv)
 
 	joined_args = join_args(argc, argv); 
 	if (!joined_args)
-		panic_exit(2, "Error: Failed Allocation", state);
+		error_handler(2, "Error: Failed Allocation", state, NULL);
 	tokens = ft_split(joined_args, ' ');
 	free(joined_args);
-	state->token_count = count_elements(tokens);
 	if (!tokens || !*tokens)
-		panic_exit(2, "Error: Failed Allocation", state);
+		error_handler(2, "Error: Failed Allocation", state, tokens);
+	state->token_count = count_elements(tokens);
 	if (validate_tokens(tokens))
-		panic_exit(2, "Error: Invalid tokens", state);
+		error_handler(2, "Error: Invalid tokens", state, tokens);
 	state->tokens = setup_tokens(tokens, state->token_count);
 	if (!state->tokens)
-		panic_exit(2, "Error: Invalid tokens", state);
+		error_handler(2, "Error: Invalid tokens", state, tokens);
 	free_dp(tokens);
 }

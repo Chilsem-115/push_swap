@@ -4,9 +4,10 @@ void	free_dp(char **buffer)
 {
 	int	i;
 
+	if (buffer == NULL)
+		return;
 	i = 0;
-	if (!buffer || !*buffer)
-	while (buffer[i])
+	while (buffer[i] != NULL)
 	{
 		free(buffer[i]);
 		i++;

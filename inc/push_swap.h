@@ -16,7 +16,6 @@
 # include "../lib/ft_printf/inc/ft_printf.h"
 # include <stdlib.h> 
 # include <unistd.h> 
-# include <stdio.h>
 # include <limits.h>
 
 typedef struct s_node
@@ -55,7 +54,7 @@ int		validate_tokens(char **tokens);
 void	fill_stack(t_state *state);
 
 // verify argumengts
-int		check_dup(t_state *state);
+void	check_dup(t_state *state);
 void	is_sorted(t_state *state);
 
 // safety and program exit
@@ -83,7 +82,7 @@ void	ss(t_stack **a, t_stack **b);
 
 //---------------//Sorting//-----------------//
 int		*create_sorted_array(t_stack *stack);
-void	sort_tokens(t_state *state, int size);
+void	sort_tokens(t_state *state);
 void	sort_list(t_state *state);
 
 //---------------//Sorting Utils//-----------------//
@@ -93,6 +92,10 @@ void	slide(int *start, int *end, int len);
 void	rotate_to_max(t_stack **b, int max_val, int max_index, int middle);
 int		get_max(t_stack *b);
 int		list_length(t_stack *b);
+
+//---------------//Small Sort Utils//----------------//
+void	push_min(t_state *state);
+void	small_sort(t_state *state);
 
 // extra functions
 

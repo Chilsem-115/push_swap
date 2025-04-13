@@ -12,7 +12,7 @@
 
 #include "../inc/push_swap.h"
 
-
+/*
 static void print_tokens(t_state *state)
 {
 	int	i;
@@ -24,6 +24,7 @@ static void print_tokens(t_state *state)
 		i++;
 	}
 }
+*/
 
 static void	initialize_program(t_state *state)
 {
@@ -49,7 +50,7 @@ int	main(int argc, char **argv)
 		panic_exit(2, "Error: Not Enough Arguments", state);
 	initial_check(state ,argc, argv);
 	parse_input(state, argc, argv);
-	print_tokens(state);
+//	print_tokens(state);
 	check_dup(state);
 	is_sorted(state);
 	fill_stack(state);

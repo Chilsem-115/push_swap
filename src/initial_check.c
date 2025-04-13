@@ -6,6 +6,7 @@ static void	check_argument(char *arg, t_state *state)
 	int	j;
 	int	num_flag;
 
+	num_flag = 0;
 	j = 0;
 	while (arg[j])
 	{

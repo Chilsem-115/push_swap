@@ -61,7 +61,7 @@ int	validate_tokens(char **tokens)
 	return (0);
 }
 
-void	check_dup(t_state state)
+void	check_dup(t_state *state)
 {
 	int	i;
 	int	j;

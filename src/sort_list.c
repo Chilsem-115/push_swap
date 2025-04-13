@@ -37,6 +37,7 @@ static void	pre_sort(t_stack **a, t_stack **b, int len, int *arr)
 	}
 }
 
+
 static void	sort_back(t_stack **a, t_stack **b)
 {
 	int	max_val;
@@ -57,11 +58,12 @@ static void	sort_back(t_stack **a, t_stack **b)
 
 void	sort_list(t_state *state)
 {
-	int	i;
-
-	i = 0;
 	sort_tokens(state);
-	pre_sort(&state->a, &state->b, state->token_count, state->tokens);
-	sort_back(a, b);
-	free(arr);
+	if (state->token_count <= 5)
+		small_sort(state);
+	else
+	{
+		pre_sort(&state->a, &state->b, state->token_count, state->tokens);
+		sort_back(&state->a, &state->b);
+	}
 }
