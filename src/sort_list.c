@@ -37,7 +37,6 @@ static void	pre_sort(t_stack **a, t_stack **b, int len, int *arr)
 	}
 }
 
-
 static void	sort_back(t_stack **a, t_stack **b)
 {
 	int	max_val;

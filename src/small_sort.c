@@ -52,6 +52,6 @@ void	small_sort(t_state *state)
 		sort_two(state);
 	else if (size == 3)
 		sort_three(state);
-	else if (size == 4 || size == 5)
+	else
 		sort_rest(state);
 }
